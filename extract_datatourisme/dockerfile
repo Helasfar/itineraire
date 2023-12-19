@@ -1,0 +1,24 @@
+# Dockerfile
+# Utilisez l'image Python officielle
+FROM python:3.9-slim
+
+# Argument de construction pour spécifier le répertoire source
+ARG APP_DIR=/app
+
+# Créez et définissez le répertoire de travail
+WORKDIR $APP_DIR
+
+# Copiez d'abord seulement le fichier requirements.txt
+COPY requirements.txt $APP_DIR/requirements.txt
+
+# Installez les dépendances directement
+RUN pip install --no-cache-dir -r $APP_DIR/requirements.txt
+
+# Copiez le script Python
+COPY app.py $APP_DIR/app.py
+
+# Exposez le port sur lequel l'application Flask écoute
+EXPOSE 5002
+
+# Commande pour exécuter l'application Flask
+CMD python3 $APP_DIR/extract_datatourisme.py
